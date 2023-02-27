@@ -4,6 +4,7 @@ import lab01.example.model.SimpleBankAccountWithAtm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static lab01.example.model.SimpleBankAccountWithAtm.FEE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -27,43 +28,43 @@ public class SimpleBankAccountWIthAtmTest {
 
     @Test
     void testDeposit() {
-        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 101);
-        assertEquals(100, this.bankAccountWithAtm.getBalance());
+        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 100);
+        assertEquals(100-FEE, this.bankAccountWithAtm.getBalance());
     }
 
     @Test
     void testWrongDeposit() {
-        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 101);
-        this.bankAccountWithAtm.deposit(1, 51);
-        assertEquals(100, this.bankAccountWithAtm.getBalance());
+        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 100);
+        this.bankAccountWithAtm.deposit(1, 50);
+        assertEquals(100-FEE, this.bankAccountWithAtm.getBalance());
     }
 
     @Test
     void testWithdraw() {
-        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 101);
-        this.bankAccountWithAtm.withdraw(this.accountHolder.getId(), 69);
-        assertEquals(30, this.bankAccountWithAtm.getBalance());
+        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 100);
+        this.bankAccountWithAtm.withdraw(this.accountHolder.getId(), 70);
+        assertEquals(30-FEE-FEE, this.bankAccountWithAtm.getBalance());
     }
 
     @Test
     void testWrongWithdraw() {
-        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 101);
-        this.bankAccountWithAtm.withdraw(1, 71);
-        assertEquals(100, this.bankAccountWithAtm.getBalance());
+        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 100);
+        this.bankAccountWithAtm.withdraw(1, 70);
+        assertEquals(100-FEE, this.bankAccountWithAtm.getBalance());
     }
 
     @Test
     void testExcessiveWithdraw() {
-        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 101);
-        this.bankAccountWithAtm.withdraw(this.accountHolder.getId(), 100);
-        assertEquals(100, this.bankAccountWithAtm.getBalance());
+        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 100);
+        this.bankAccountWithAtm.withdraw(this.accountHolder.getId(), 100-FEE);
+        assertEquals(100-FEE, this.bankAccountWithAtm.getBalance());
     }
 
     @Test
     void testWrongAmount() {
-        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 101);
+        this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 100);
         this.bankAccountWithAtm.deposit(this.accountHolder.getId(), 0);
         this.bankAccountWithAtm.withdraw(this.accountHolder.getId(), -10);
-        assertEquals(100, this.bankAccountWithAtm.getBalance());
+        assertEquals(100-FEE, this.bankAccountWithAtm.getBalance());
     }
 }
