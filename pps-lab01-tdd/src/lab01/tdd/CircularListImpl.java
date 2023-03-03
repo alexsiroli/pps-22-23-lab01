@@ -6,13 +6,10 @@ import java.util.Optional;
 
 public class CircularListImpl implements CircularList {
 
-    private final List<Optional<Integer>> list;
-    private int pointer;
+    final static int STARTING_INDEX = -1;
 
-    public CircularListImpl() {
-        this.list = new ArrayList<>();
-        this.pointer = -1;
-    }
+    private final List<Optional<Integer>> list = new ArrayList<>();
+    private int pointer = STARTING_INDEX;
 
     @Override
     public void add(int element) {
@@ -31,25 +28,24 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Optional<Integer> next() {
+        if (this.isEmpty()) {
+            return Optional.empty();
+        }
         this.pointer = (this.pointer+1) % this.size();
-        return this.pickElement();
+        return this.list.get(this.pointer);
     }
 
     @Override
     public Optional<Integer> previous() {
+        if (this.isEmpty()) {
+            return Optional.empty();
+        }
         this.pointer = this.pointer <= 0 ? this.size()-1 : this.pointer-1;
-        return this.pickElement();
+        return this.list.get(this.pointer);
     }
 
     @Override
     public void reset() {
-        this.pointer = -1;
-    }
-
-    private Optional<Integer> pickElement() {
-        if (this.pointer < this.size()) {
-            return this.list.get(this.pointer);
-        }
-        return Optional.empty();
+        this.pointer = STARTING_INDEX;
     }
 }

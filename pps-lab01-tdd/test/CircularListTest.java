@@ -34,19 +34,15 @@ public class CircularListTest {
     }
 
     @Test
-    void addMultipleElements() {
-        for (int i = 0; i < REPETITION_NUMBER; i++){
-            this.circularList.add(1);
-        }
+    void checkAddMultipleElements() {
+        this.addMultipleElements();
         assertEquals(REPETITION_NUMBER, this.circularList.size());
         assertFalse(this.circularList.isEmpty());
     }
 
     @Test
     void checkNext() {
-        this.circularList.add(0);
-        this.circularList.add(1);
-        this.circularList.add(2);
+        this.addThreeElements();
         assertEquals(Optional.of(0), this.circularList.next());
         assertEquals(Optional.of(1), this.circularList.next());
         assertEquals(Optional.of(2), this.circularList.next());
@@ -55,19 +51,21 @@ public class CircularListTest {
 
     @Test
     void checkMultipleNext() {
-        this.circularList.add(0);
-        this.circularList.add(1);
-        this.circularList.add(2);
+        this.addThreeElements();
         for (int i = 0; i < REPETITION_NUMBER; i++) {
             assertEquals(Optional.of(i%3), this.circularList.next());
         }
     }
 
     @Test
+    void checkEmptyList() {
+        assertEquals(Optional.empty(),this.circularList.next());
+        assertEquals(Optional.empty(),this.circularList.previous());
+    }
+
+    @Test
     void checkPrevious() {
-        this.circularList.add(0);
-        this.circularList.add(1);
-        this.circularList.add(2);
+        this.addThreeElements();
         assertEquals(Optional.of(0), this.circularList.next());
         assertEquals(Optional.of(1), this.circularList.next());
         assertEquals(Optional.of(0), this.circularList.previous());
@@ -76,13 +74,23 @@ public class CircularListTest {
 
     @Test
     void checkReset() {
-        this.circularList.add(0);
-        this.circularList.add(1);
-        this.circularList.add(2);
+        this.addThreeElements();
         assertEquals(Optional.of(0), this.circularList.next());
         assertEquals(Optional.of(1), this.circularList.next());
         this.circularList.reset();
         assertEquals(Optional.of(0), this.circularList.next());
         assertEquals(Optional.of(1), this.circularList.next());
+    }
+
+    private void addMultipleElements(){
+        for (int i = 0; i < REPETITION_NUMBER; i++){
+            this.circularList.add(i);
+        }
+    }
+
+    private void addThreeElements() {
+        this.circularList.add(0);
+        this.circularList.add(1);
+        this.circularList.add(2);
     }
 }
