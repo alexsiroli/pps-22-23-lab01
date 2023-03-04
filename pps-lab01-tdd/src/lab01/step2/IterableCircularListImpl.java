@@ -24,7 +24,7 @@ public class IterableCircularListImpl implements IterableCircularList {
 
     @Override
     public boolean isEmpty() {
-        return this.size() == 0;
+        return this.circularList.isEmpty();
     }
 
     @Override
