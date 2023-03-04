@@ -8,7 +8,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FilteredCircularListImplTest {
+public class FilteredCircularListTest {
 
     private static final int REPETITION_NUMBER = 100;
     private FilteredCircularList circularList;
